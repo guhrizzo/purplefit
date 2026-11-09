@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* ───────── Identidade Purple Fit ───────── */
+@theme {
+  --color-ink: #0b0414;
+  --color-night: #150826;
+  --color-grape: #2b0d52;
+  --color-purple: #7b2cd9;
+  --color-royal: #5b1fb0;
+  --color-violet: #b88af7;
+  --color-lilac: #ece1fc;
+  --color-paper: #f7f2fd;
+  --color-volt: #ffd60a;
+
+  --font-display: var(--font-barlow), "Arial Narrow", Impact, sans-serif;
+  --font-sans: var(--font-body-active), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --font-body-active: var(--font-inter);
+  color-scheme: dark light;
+}
+
+html {
+  scroll-padding-top: 5.5rem;
+  filter: var(--a11y-filter, none);
+  -webkit-text-size-adjust: 100%;
+}
+
+html[data-animations="on"] {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-volt);
+  color: var(--color-ink);
+}
+
+/* Foco visível em qualquer fundo (WCAG 2.4.7 / 2.4.11) */
+:focus-visible {
+  outline: 3px solid var(--color-volt);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--color-ink);
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.85rem 1.25rem;
+  background: var(--color-volt);
+  color: var(--color-ink);
+  font-weight: 700;
+  border-radius: 0.5rem;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* Texto vazado (contorno) para números e palavras decorativas */
+.outline-text {
+  -webkit-text-stroke: 2px currentColor;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+/* ───────── Painel de acessibilidade: efeitos globais ───────── */
+
+/* Animações desativadas: interrompe CSS e deixa conteúdo visível */
+html[data-animations="off"] *,
+html[data-animations="off"] *::before,
+html[data-animations="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-animations="off"] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html[data-animations="off"] .marquee-track {
+  transform: none;
+}
+
+/* Fonte de leitura mais acessível */
+html[data-readable="true"] {
+  --font-body-active: var(--font-atkinson);
+}
+html[data-readable="true"] body {
+  font-family: var(--font-atkinson), var(--font-sans);
+}
+
+/* Espaçamento de texto (WCAG 1.4.12) */
+html[data-spacing="true"] body p,
+html[data-spacing="true"] body li,
+html[data-spacing="true"] body dd,
+html[data-spacing="true"] body dt,
+html[data-spacing="true"] body a,
+html[data-spacing="true"] body span,
+html[data-spacing="true"] body label,
+html[data-spacing="true"] body button {
+  line-height: 1.8 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+html[data-spacing="true"] body p {
+  margin-bottom: 1.5em;
+}
+
+/* Destacar links */
+html[data-links="true"] a:not([data-no-highlight]) {
+  text-decoration: underline !important;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 3px !important;
+  background-color: var(--color-volt) !important;
+  color: var(--color-ink) !important;
+  outline: 2px solid var(--color-ink);
+}
+
+/* Contraste negativo: reverte imagens para manter as cores naturais */
+html[data-negative="true"] img,
+html[data-negative="true"] video,
+html[data-negative="true"] iframe,
+html[data-negative="true"] [data-media] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Alto contraste: preto, branco e amarelo */
+html[data-contrast="high"] body,
+html[data-contrast="high"] body *:not(img):not(video):not(iframe):not(svg):not(path):not(circle):not(textPath):not([data-keep-bg]) {
+  background-color: #000 !important;
+  background-image: none !important;
+  color: #fff !important;
+  border-color: #fff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  -webkit-text-stroke-color: #fff !important;
+}
+html[data-contrast="high"] a,
+html[data-contrast="high"] a *,
+html[data-contrast="high"] button,
+html[data-contrast="high"] button * {
+  color: #ffeb3b !important;
+}
+html[data-contrast="high"] a:focus-visible,
+html[data-contrast="high"] button:focus-visible,
+html[data-contrast="high"] input:focus-visible,
+html[data-contrast="high"] select:focus-visible {
+  outline: 4px solid #ffeb3b !important;
+  box-shadow: none !important;
+}
+html[data-contrast="high"] [data-decor] {
+  display: none !important;
+}
+html[data-contrast="high"] img,
+html[data-contrast="high"] video {
+  opacity: 0.75;
+}
+html[data-contrast="high"] a,
+html[data-contrast="high"] button,
+html[data-contrast="high"] input,
+html[data-contrast="high"] select {
+  border: 2px solid #ffeb3b !important;
+}
